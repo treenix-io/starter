@@ -1,8 +1,8 @@
 // Ticker service — generates live data points as children every 2s
 
-import { createNode, register } from '@treenity/core';
-import '@treenity/core/contexts/service';
-import { safeInterval } from '@treenity/core/util/safe-timers';
+import { createNode, register } from '@treenx/core';
+import '@treenx/core/contexts/service';
+import { safeInterval } from '@treenx/core/util/safe-timers';
 import { ExampleTick } from './types';
 
 const MAX = 8;

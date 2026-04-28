@@ -11,4 +11,4 @@ if [ -f /app/tree/mods/package.json ]; then
   cd /app
 fi
 
-exec tsx node_modules/@treenity/core/src/server/main.ts root.json
+exec tsx node_modules/@treenx/core/src/server/main.ts root.json

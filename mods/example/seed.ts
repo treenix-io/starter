@@ -1,11 +1,11 @@
-import { type NodeData } from '@treenity/core';
-import { registerPrefab } from '@treenity/core/mod';
+import { type NodeData } from '@treenx/core';
+import { registerPrefab } from '@treenx/core/mod';
 
 registerPrefab('example', 'seed', [
   {
     $path: 'example',
     $type: 'example.showcase',
-    title: 'Treenity Showcase',
+    title: 'Treenix Showcase',
     description: 'Each card demonstrates one platform capability',
   },
 
@@ -21,7 +21,7 @@ registerPrefab('example', 'seed', [
   {
     $path: 'example/poll',
     $type: 'example.poll',
-    question: 'What makes Treenity unique?',
+    question: 'What makes Treenix unique?',
     options: ['Tree structure', 'Typed components', 'Live reactivity', 'Action system'],
     votes: {},
     status: 'open',

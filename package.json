@@ -1,5 +1,5 @@
 {
-  "name": "treenity-starter",
+  "name": "treenix-starter",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,9 +8,9 @@
   },
   "dependencies": {
     "@anthropic-ai/claude-agent-sdk": "^0.2.79",
-    "@treenity/core": "^3.0.8",
-    "@treenity/mods": "^3.0.9",
-    "@treenity/react": "^3.0.10"
+    "@treenx/core": "^3.0.8",
+    "@treenx/mods": "^3.0.9",
+    "@treenx/react": "^3.0.10"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.0",

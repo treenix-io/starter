@@ -1,1 +1,1 @@
-import '@treenity/react/app/main'
+import '@treenx/react/app/main'

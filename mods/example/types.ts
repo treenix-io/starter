@@ -1,4 +1,4 @@
-import { getCtx, registerType } from '@treenity/core/comp';
+import { getCtx, registerType } from '@treenx/core/comp';
 
 // ── Counter: simplest type + actions ──
 
@@ -85,7 +85,7 @@ registerType('example.tick', ExampleTick);
 // ── Showcase: root gallery container ──
 
 export class ExampleShowcase {
-  title = 'Treenity Showcase';
+  title = 'Treenix Showcase';
   description = 'Capabilities gallery — each card demos one feature';
 }
 registerType('example.showcase', ExampleShowcase);

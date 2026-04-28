@@ -1,8 +1,8 @@
-import { register } from '@treenity/core/core';
-import { Render, type View } from '@treenity/react/context';
-import { useChildren, usePath } from '@treenity/react/hooks';
-import { Button } from '@treenity/react/ui/button';
-import { Input } from '@treenity/react/ui/input';
+import { register } from '@treenx/core/core';
+import { Render, type View } from '@treenx/react/context';
+import { useChildren, usePath } from '@treenx/react/hooks';
+import { Button } from '@treenx/react/ui/button';
+import { Input } from '@treenx/react/ui/input';
 import { useState } from 'react';
 import {
   ExampleCounter,

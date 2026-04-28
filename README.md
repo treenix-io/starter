@@ -1,11 +1,11 @@
-# Treenity Starter
+# Treenix Starter
 
 A typed tree runtime where AI agents operate safely.
 
 ## Quick Start
 
 ```bash
-git clone https://github.com/treenity-ai/starter.git
+git clone https://github.com/treenix-ai/starter.git
 cd starter
 npm install
 npm run dev
@@ -13,7 +13,7 @@ npm run dev
 
 Open http://localhost:3210
 
-Single process: Vite 8 frontend + Treenity server on :3211.
+Single process: Vite 8 frontend + Treenix server on :3211.
 
 ## Structure
 
@@ -24,8 +24,8 @@ starter/
 ├── mods/            local mods
 ├── src/main.tsx     frontend entry
 ├── root.json        server config
-├── vite.config.ts   Vite + Treenity plugin
-└── package.json     npm deps: @treenity/core, react, mods
+├── vite.config.ts   Vite + Treenix plugin
+└── package.json     npm deps: @treenx/core, react, mods
 ```
 
 ## Adding Mods

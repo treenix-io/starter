@@ -1,10 +1,10 @@
-import { register } from '@treenity/core';
-import { usePath } from '@treenity/react/hooks';
-import { trpc } from '@treenity/react/tree/trpc';
-import { Badge } from '@treenity/react/ui/badge';
-import { Button } from '@treenity/react/ui/button';
-import { Input } from '@treenity/react/ui/input';
-import { Label } from '@treenity/react/ui/label';
+import { register } from '@treenx/core';
+import { usePath } from '@treenx/react/hooks';
+import { trpc } from '@treenx/react/tree/trpc';
+import { Badge } from '@treenx/react/ui/badge';
+import { Button } from '@treenx/react/ui/button';
+import { Input } from '@treenx/react/ui/input';
+import { Label } from '@treenx/react/ui/label';
 import { useEffect, useState } from 'react';
 
 function ProfileView() {

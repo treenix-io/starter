@@ -1,4 +1,4 @@
-# Treenity Starter — production image
+# Treenix Starter — production image
 FROM node:25-slim
 
 WORKDIR /app
