@@ -5,7 +5,7 @@ A typed tree runtime where AI agents operate safely.
 ## Quick Start
 
 ```bash
-git clone https://github.com/treenix-ai/starter.git
+git clone https://github.com/treenix-io/starter.git
 cd starter
 npm install
 npm run dev

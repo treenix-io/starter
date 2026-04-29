@@ -1,4 +1,4 @@
-import { register } from '@treenx/core/core';
+import { register } from '@treenx/core';
 import { Render, type View } from '@treenx/react/context';
 import { useChildren, usePath } from '@treenx/react/hooks';
 import { Button } from '@treenx/react/ui/button';
