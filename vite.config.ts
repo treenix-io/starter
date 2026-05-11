@@ -11,7 +11,7 @@ export default defineConfig({
   },
   plugins: [
     treenixServer(),
-    treenixPlugin({ modsDirs: [resolve(import.meta.dirname, 'mods'), resolve(import.meta.dirname, 'engine/mods')] }),
+    treenixPlugin({ modsDirs: [resolve(import.meta.dirname, 'mods')] }),
     tailwindcss(),
     react({ babel: { plugins: ['babel-plugin-react-compiler'] } }),
   ],
