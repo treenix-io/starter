@@ -1,12 +1,12 @@
 {
   "$path": "/",
-  "$type": "metatron.config",
+  "$type": "t.dir",
   "$acl": [
     { "g": "public", "p": 1 },
     { "g": "authenticated", "p": 9 },
     { "g": "admins", "p": 15 }
   ],
-  "seeds": ["core"],
+  "seeds": ["core", "auth", "mcp", "view-shell", "editor-shell", "onboarding"],
   "mount": { "$type": "t.mount.overlay", "layers": ["base", "work"] },
   "base": { "$type": "t.mount.fs", "root": "tree/seed" },
   "work": { "$type": "t.mount.fs", "root": "tree/work" }
