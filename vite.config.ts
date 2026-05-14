@@ -1,9 +1,9 @@
 import tailwindcss from '@tailwindcss/vite';
-import treenixPlugin from '@treenx/react/vite-plugin-treenix';
+import treenixServer from '@treenx/core/vite-plugin';
+import treenixPlugin from '@treenx/react/vite-plugin';
 import react from '@vitejs/plugin-react';
 import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
-import { treenixServer } from './vite-plugin-treenix';
 
 export default defineConfig({
   resolve: {
