@@ -18,10 +18,9 @@ export default defineConfig({
   optimizeDeps: {
     include: [
       'use-sync-external-store/shim', 'use-sync-external-store/shim/with-selector',
+      'use-sync-external-store/shim/index.js', 'use-sync-external-store/shim/with-selector.js',
       'react', 'react-dom', 'react-dom/client', 'react/jsx-runtime', 'react/jsx-dev-runtime',
       'immer', 'valtio', 'dayjs', 'sift',
-      '@tanstack/react-query', '@trpc/client',
-      'react-grid-layout',
       'highlight.js', 'highlight.js/lib/core', 'lowlight',
     ],
   },

@@ -1,4 +1,4 @@
-import { getCtx, registerType } from '@treenx/core/comp';
+import { getCtx, makeNode, registerType } from '@treenx/core';
 
 // ── Counter: simplest type + actions ──
 
@@ -26,12 +26,10 @@ export class ExampleTodoList {
     if (!data.title?.trim()) throw new Error('Title required');
     const { node, tree } = getCtx();
     const id = Date.now().toString(36);
-    await tree.set({
-      $path: `${node.$path}/${id}`,
-      $type: 'example.todo.item',
+    await tree.set(makeNode(`${node.$path}/${id}`, 'example.todo.item', {
       title: data.title.trim(),
       done: false,
-    });
+    }));
   }
 }
 registerType('example.todo.list', ExampleTodoList);

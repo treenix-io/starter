@@ -1,6 +1,4 @@
-import { register } from '@treenx/core';
-import { Render, type View } from '@treenx/react/context';
-import { useChildren, usePath } from '@treenx/react/hooks';
+import { Render, useActions, useChildren, view } from '@treenx/react';
 import { Button } from '@treenx/react/ui/button';
 import { Input } from '@treenx/react/ui/input';
 import { useState } from 'react';
@@ -15,35 +13,36 @@ import {
 
 // ── Counter View ──
 
-const CounterView: View<ExampleCounter> = ({ value, ctx }) => {
+view(ExampleCounter, ({ value }) => {
+  const { increment, decrement, reset } = useActions(value);
   return (
     <div className="flex flex-col items-center gap-4">
-      <div className="text-5xl font-mono font-bold tabular-nums">{value.count ?? 0}</div>
+      <div className="text-5xl font-mono font-bold tabular-nums">{value.count}</div>
       <div className="flex gap-2">
-        <Button size="sm" variant="outline" onClick={() => value.decrement()}>−</Button>
-        <Button size="sm" variant="outline" onClick={() => value.reset()}>Reset</Button>
-        <Button size="sm" onClick={() => value.increment()}>+</Button>
+        <Button size="sm" variant="outline" onClick={() => decrement()}>−</Button>
+        <Button size="sm" variant="outline" onClick={() => reset()}>Reset</Button>
+        <Button size="sm" onClick={() => increment()}>+</Button>
       </div>
     </div>
   );
-};
-register('example.counter', 'react', CounterView);
+});
 
 // ── Todo List View ──
 
-const TodoListView: View<ExampleTodoList> = ({ value, ctx }) => {
-  const children = useChildren(ctx!.path, { watch: true, watchNew: true });
+view(ExampleTodoList, ({ value, ctx }) => {
+  const { add } = useActions(value);
+  const { data: children } = useChildren(ctx.path, { watch: true, watchNew: true });
   const [draft, setDraft] = useState('');
 
   const handleAdd = async () => {
     if (!draft.trim()) return;
-    await ctx!.execute('add', { title: draft });
+    await add({ title: draft });
     setDraft('');
   };
 
   return (
     <div className="space-y-3">
-      <h3 className="font-medium">{value.title ?? 'Todos'}</h3>
+      <h3 className="font-medium">{value.title}</h3>
       <div className="flex gap-2">
         <Input
           className="flex-1"
@@ -56,40 +55,38 @@ const TodoListView: View<ExampleTodoList> = ({ value, ctx }) => {
       </div>
       <ul className="space-y-1">
         {children.map(child => (
-          <TodoItemView key={child.$path} value={child as any} ctx={{ node: child, path: child.$path, execute: ctx!.execute }} />
+          <Render key={child.$path} value={child} />
         ))}
       </ul>
     </div>
   );
-};
-register('example.todo.list', 'react', TodoListView);
+});
 
 // ── Todo Item View ──
-// Uses usePath for TypeProxy — needs toggle() action method
 
-const TodoItemView: View<ExampleTodoItem> = ({ value, ctx }) => {
-  const item = usePath(ctx!.path, ExampleTodoItem);
+view(ExampleTodoItem, ({ value }) => {
+  const { toggle } = useActions(value);
 
   return (
     <li
       className="flex items-center gap-2 px-3 py-2 rounded hover:bg-muted cursor-pointer"
-      onClick={() => item.toggle()}
+      onClick={() => toggle()}
     >
       <span className={`w-4 h-4 rounded border flex items-center justify-center text-xs
         ${value.done ? 'bg-primary border-primary text-primary-foreground' : 'border-input'}`}>
         {value.done ? '✓' : ''}
       </span>
       <span className={value.done ? 'line-through text-muted-foreground' : ''}>
-        {value.title ?? ''}
+        {value.title}
       </span>
     </li>
   );
-};
-register('example.todo.item', 'react', TodoItemView);
+});
 
 // ── Poll View ──
 
-const PollView: View<ExamplePoll> = ({ value, ctx }) => {
+view(ExamplePoll, ({ value }) => {
+  const { vote, close } = useActions(value);
   const votes = value.votes ?? {};
   const options = value.options ?? [];
   const totalVotes = Object.values(votes).reduce((s, n) => s + n, 0);
@@ -97,7 +94,7 @@ const PollView: View<ExamplePoll> = ({ value, ctx }) => {
 
   return (
     <div className="space-y-3">
-      <div className="font-medium">{value.question ?? ''}</div>
+      <div className="font-medium">{value.question}</div>
 
       <div className="space-y-2">
         {options.map(opt => {
@@ -107,7 +104,7 @@ const PollView: View<ExamplePoll> = ({ value, ctx }) => {
             <button
               key={opt}
               disabled={closed}
-              onClick={() => ctx!.execute('vote', { option: opt })}
+              onClick={() => vote({ option: opt })}
               className="w-full text-left px-3 py-2 rounded border border-input
                 hover:bg-muted disabled:opacity-60 disabled:cursor-not-allowed"
             >
@@ -129,7 +126,7 @@ const PollView: View<ExamplePoll> = ({ value, ctx }) => {
       <div className="flex items-center justify-between text-sm text-muted-foreground">
         <span>{totalVotes} vote{totalVotes !== 1 ? 's' : ''}</span>
         {!closed && (
-          <Button size="sm" variant="ghost" onClick={() => ctx!.execute('close')}>
+          <Button size="sm" variant="ghost" onClick={() => close()}>
             Close poll
           </Button>
         )}
@@ -137,13 +134,12 @@ const PollView: View<ExamplePoll> = ({ value, ctx }) => {
       </div>
     </div>
   );
-};
-register('example.poll', 'react', PollView);
+});
 
 // ── Ticker View ──
 
-const TickerView: View<ExampleTicker> = ({ value, ctx }) => {
-  const children = useChildren(ctx!.path, { watch: true, watchNew: true });
+view(ExampleTicker, ({ ctx }) => {
+  const { data: children } = useChildren(ctx.path, { watch: true, watchNew: true });
   const last = children.slice(-8).reverse();
 
   return (
@@ -176,8 +172,7 @@ const TickerView: View<ExampleTicker> = ({ value, ctx }) => {
       )}
     </div>
   );
-};
-register('example.ticker', 'react', TickerView);
+});
 
 // ── Showcase Root View ──
 
@@ -188,14 +183,14 @@ const LABELS: Record<string, { label: string; desc: string }> = {
   'example.ticker':    { label: 'Ticker',     desc: 'Service + live data' },
 };
 
-const ShowcaseView: View<ExampleShowcase> = ({ value, ctx }) => {
-  const children = useChildren(ctx!.path, { watch: true });
+view(ExampleShowcase, ({ value, ctx }) => {
+  const { data: children } = useChildren(ctx.path, { watch: true });
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-6">
       <div>
-        <h1 className="text-2xl font-bold">{value.title ?? ''}</h1>
-        <p className="text-muted-foreground">{value.description ?? ''}</p>
+        <h1 className="text-2xl font-bold">{value.title}</h1>
+        <p className="text-muted-foreground">{value.description}</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -215,5 +210,4 @@ const ShowcaseView: View<ExampleShowcase> = ({ value, ctx }) => {
       </div>
     </div>
   );
-};
-register('example.showcase', 'react', ShowcaseView);
+});

@@ -1,4 +1,4 @@
-import { registerType } from '@treenx/core/comp';
+import { registerType } from '@treenx/core';
 
 export class Profile {
   label = 'Profile';

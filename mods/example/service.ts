@@ -1,6 +1,6 @@
 // Ticker service — generates live data points as children every 2s
 
-import { createNode, register } from '@treenx/core';
+import { makeNode, register } from '@treenx/core';
 import '@treenx/core/contexts/service';
 import { safeInterval } from '@treenx/core/util/safe-timers';
 import { ExampleTick } from './types';
@@ -13,7 +13,7 @@ register('example.ticker', 'service', async (node, ctx) => {
   const timer = safeInterval(async () => {
     const ts = Date.now();
     const name = String(ts).slice(-6).padStart(6, '0');
-    await ctx.tree.set(createNode(`${node.$path}/${name}`, ExampleTick, {
+    await ctx.tree.set(makeNode(`${node.$path}/${name}`, ExampleTick, {
       ts,
       value: +(50 + Math.sin(seq * 0.3) * 20 + Math.random() * 5).toFixed(1),
       seq: seq++,
