@@ -1,9 +1,9 @@
-import tailwindcss from '@tailwindcss/vite'
-import react from '@vitejs/plugin-react'
-import { resolve } from 'node:path'
-import { defineConfig } from 'vite'
-import treenixPlugin from '@treenx/react/vite-plugin-treenix'
-import { treenixServer } from './vite-plugin-treenix'
+import tailwindcss from '@tailwindcss/vite';
+import treenixPlugin from '@treenx/react/vite-plugin-treenix';
+import react from '@vitejs/plugin-react';
+import { resolve } from 'node:path';
+import { defineConfig } from 'vite';
+import { treenixServer } from './vite-plugin-treenix';
 
 export default defineConfig({
   resolve: {
@@ -21,7 +21,7 @@ export default defineConfig({
       'react', 'react-dom', 'react-dom/client', 'react/jsx-runtime', 'react/jsx-dev-runtime',
       'immer', 'valtio', 'dayjs', 'sift',
       '@tanstack/react-query', '@trpc/client',
-      '@tiptap/react', 'react-grid-layout',
+      'react-grid-layout',
       'highlight.js', 'highlight.js/lib/core', 'lowlight',
     ],
   },
