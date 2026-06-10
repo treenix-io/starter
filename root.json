@@ -7,7 +7,7 @@
     { "g": "admins", "p": 15 }
   ],
   "seeds": ["core", "auth", "mcp", "view-shell", "editor-shell", "onboarding"],
-  "mount": { "$type": "t.mount.overlay", "layers": ["base", "work"] },
-  "base": { "$type": "t.mount.fs", "root": "tree/seed" },
-  "work": { "$type": "t.mount.fs", "root": "tree/work" }
+  "#mount": { "$type": "t.mount.overlay", "layers": ["base", "work"] },
+  "#base": { "$type": "t.mount.fs", "root": "tree/seed" },
+  "#work": { "$type": "t.mount.fs", "root": "tree/work" }
 }
