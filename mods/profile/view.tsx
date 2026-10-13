@@ -1,25 +1,44 @@
-import { trpc, usePath, view } from '@treenx/react';
+import { declareClientModule, declareView } from '@treenx/react/context/client-registry';
+import { usePath, useTreeEffects } from '@treenx/react';
 import { Badge } from '@treenx/react/ui/badge';
 import { Button } from '@treenx/react/ui/button';
+import { useAuthContext } from '@treenx/react/app/auth-context';
+import { getComponent } from '@treenx/core';
+import type { Node } from '@treenx/core/kernel/types';
+import { KernelError } from '@treenx/core/errors';
 import { useEffect, useState } from 'react';
 import { Profile } from './types';
 
-view(Profile, () => {
-  const [userId, setUserId] = useState<string | null>(null);
+const ProfileView = declareView(Profile, 'react', () => {
+  const auth = useAuthContext();
+  const effects = useTreeEffects();
+  const userId = auth.authed;
   const [busy, setBusy] = useState(false);
+  const [userPath, setUserPath] = useState<string | null>(null);
 
   useEffect(() => {
-    trpc.me.query().then(res => setUserId(res?.userId ?? null));
-  }, []);
+    let active = true;
+    if (userId === null) return;
+    const kernel = effects.kernel;
+    if (kernel === undefined) throw new KernelError('UNAVAILABLE', 'Profile requires a native source');
+    void kernel.read({ children: '/auth/users', where: { $id: userId.slice(2) } }).then(result => {
+      const copy = result.copies[0];
+      if (copy === undefined) throw new KernelError('NOT_FOUND', 'Authenticated account is missing');
+      if ('error' in copy) throw copy.error;
+      if (active) setUserPath(copy.node.$path);
+    }).catch(error => { console.error(error); throw error; });
+    return () => { active = false; };
+  }, [effects, userId]);
 
-  const { data: userNode } = usePath(userId ? `/auth/users/${userId}` : null);
-  const groups = userNode?.groups as { $type: string; list: string[] } | undefined;
-  const avatar = userNode?.avatar as { $type: string; url?: string } | undefined;
+  const { data: userNode } = usePath<Node>(userPath);
+  const groups = userNode === undefined ? undefined : getComponent<{ $type: string; list: string[] }>(userNode, 't.groups');
+  const avatar = userNode === undefined ? undefined : getComponent<{ $type: string; url?: string }>(userNode, 't.avatar');
 
+  /** End the native session through the owner shared by the original application shell. */
   async function handleLogout() {
     setBusy(true);
     try {
-      await trpc.logout.mutate();
+      auth.logout();
       window.location.reload();
     } finally {
       setBusy(false);
@@ -68,3 +87,5 @@ view(Profile, () => {
     </div>
   );
 });
+
+export const clientModules = [declareClientModule('starter/profile/views', [ProfileView])];

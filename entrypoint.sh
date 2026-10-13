@@ -2,7 +2,7 @@
 set -e
 
 # Create tenant mods dir if missing
-mkdir -p /app/tree/mods
+mkdir -p /app/tree/mods /app/tree/native/base /app/tree/native/work
 
 # Install tenant mod deps if they have package.json
 if [ -f /app/tree/mods/package.json ]; then
@@ -11,4 +11,4 @@ if [ -f /app/tree/mods/package.json ]; then
   cd /app
 fi
 
-exec tsx node_modules/@treenx/core/src/server/main.ts root.json
+exec node --import tsx --conditions=development node_modules/@treenx/core/src/server/native-main.ts root.json --deployment native-deployment.json

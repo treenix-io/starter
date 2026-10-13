@@ -12,7 +12,7 @@ RUN npm install
 COPY . .
 
 # Build frontend
-RUN npx vite build --outDir dist-front
+RUN npm run build -- --outDir dist-front
 RUN chmod +x entrypoint.sh
 
 # Tenant mods dir scanned at runtime

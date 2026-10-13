@@ -1,6 +1,9 @@
-import { registerType } from '@treenx/core';
+import { declareClientType } from '@treenx/core/comp/client-declaration';
+import { declareClientModule } from '@treenx/react/context/client-registry';
 
 export class Profile {
   label = 'Profile';
 }
-registerType('profile', Profile);
+const declaredProfile = declareClientType('profile', Profile);
+
+export const clientModules = [declareClientModule('starter/profile/types', [], undefined, [declaredProfile])];

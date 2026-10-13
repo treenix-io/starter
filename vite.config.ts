@@ -8,12 +8,13 @@ import { defineConfig } from 'vite';
 export default defineConfig({
   resolve: {
     dedupe: ['react', 'react-dom'],
+    conditions: ['development', 'browser', 'import'],
   },
   plugins: [
-    treenixServer(),
+    treenixServer({ configPath: 'root.json', args: ['--deployment', 'native-deployment.json'] }),
     treenixPlugin({ modsDirs: [resolve(import.meta.dirname, 'mods')] }),
     tailwindcss(),
-    react({ babel: { plugins: ['babel-plugin-react-compiler'] } }),
+    react(),
   ],
   optimizeDeps: {
     include: [
@@ -21,7 +22,7 @@ export default defineConfig({
       'use-sync-external-store/shim/index.js', 'use-sync-external-store/shim/with-selector.js',
       'react', 'react-dom', 'react-dom/client', 'react/jsx-runtime', 'react/jsx-dev-runtime',
       'immer', 'valtio', 'dayjs', 'sift',
-      '@tanstack/react-query', '@trpc/client',
+      '@tanstack/react-query',
       'react-grid-layout',
       'highlight.js', 'highlight.js/lib/core', 'lowlight',
     ],
@@ -30,7 +31,8 @@ export default defineConfig({
     port: 3210,
     host: '0.0.0.0',
     proxy: {
-      '/trpc/': { target: 'http://127.0.0.1:3211', changeOrigin: true },
+      '/twp': { target: 'http://127.0.0.1:3211', changeOrigin: true },
+      '/auth/': { target: 'http://127.0.0.1:3211', changeOrigin: true },
       '/api/': { target: 'http://127.0.0.1:3211', changeOrigin: true },
     },
   },

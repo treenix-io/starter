@@ -1,0 +1,19 @@
+{
+  "id": "starter-local",
+  "credentialTtlMs": 43200000,
+  "port": 3211,
+  "allowedOrigins": [
+    "http://localhost:3210",
+    "http://127.0.0.1:3210"
+  ],
+  "modsDir": "./tree/mods",
+  "additionalModules": [
+    {
+      "id": "@treenx/ssr",
+      "entry": "@treenx/ssr/kernel"
+    }
+  ],
+  "mountDirectories": {
+    "docs": "./docs"
+  }
+}

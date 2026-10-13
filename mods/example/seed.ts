@@ -1,7 +1,7 @@
-import { type NodeData } from '@treenx/core';
-import { registerPrefab } from '@treenx/core/mod';
+import type { NodeInput } from '@treenx/core/kernel/types';
 
-registerPrefab('example', 'seed', [
+export const seedNodes: readonly NodeInput[] = [
+  { $path: '/sys/autostart/example-ticker', $type: 't.ref', $ref: '/example/ticker' },
   {
     $path: 'example',
     $type: 'example.showcase',
@@ -29,4 +29,4 @@ registerPrefab('example', 'seed', [
 
   // Ticker (service will generate children)
   { $path: 'example/ticker', $type: 'example.ticker', label: 'Live ticker' },
-] as NodeData[]);
+];

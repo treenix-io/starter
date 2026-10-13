@@ -1,4 +1,5 @@
-import { Render, useActions, useChildren, view } from '@treenx/react';
+import { declareClientModule, declareView } from '@treenx/react/context/client-registry';
+import { Render, useActions, useChildren } from '@treenx/react';
 import { Button } from '@treenx/react/ui/button';
 import { Input } from '@treenx/react/ui/input';
 import { useState } from 'react';
@@ -13,7 +14,7 @@ import {
 
 // ── Counter View ──
 
-view(ExampleCounter, ({ value }) => {
+const ExampleCounterView = declareView(ExampleCounter, 'react', ({ value }) => {
   const { increment, decrement, reset } = useActions(value);
   return (
     <div className="flex flex-col items-center gap-4">
@@ -29,9 +30,9 @@ view(ExampleCounter, ({ value }) => {
 
 // ── Todo List View ──
 
-view(ExampleTodoList, ({ value, ctx }) => {
+const ExampleTodoListView = declareView(ExampleTodoList, 'react', ({ value, ctx }) => {
   const { add } = useActions(value);
-  const { data: children } = useChildren(ctx.path, { watch: true, watchNew: true });
+  const { data: children } = useChildren(ctx!.path, { watch: true, watchNew: true });
   const [draft, setDraft] = useState('');
 
   const handleAdd = async () => {
@@ -64,7 +65,7 @@ view(ExampleTodoList, ({ value, ctx }) => {
 
 // ── Todo Item View ──
 
-view(ExampleTodoItem, ({ value }) => {
+const ExampleTodoItemView = declareView(ExampleTodoItem, 'react', ({ value }) => {
   const { toggle } = useActions(value);
 
   return (
@@ -85,7 +86,7 @@ view(ExampleTodoItem, ({ value }) => {
 
 // ── Poll View ──
 
-view(ExamplePoll, ({ value }) => {
+const ExamplePollView = declareView(ExamplePoll, 'react', ({ value }) => {
   const { vote, close } = useActions(value);
   const votes = value.votes ?? {};
   const options = value.options ?? [];
@@ -138,8 +139,8 @@ view(ExamplePoll, ({ value }) => {
 
 // ── Ticker View ──
 
-view(ExampleTicker, ({ ctx }) => {
-  const { data: children } = useChildren(ctx.path, { watch: true, watchNew: true });
+const ExampleTickerView = declareView(ExampleTicker, 'react', ({ value, ctx }) => {
+  const { data: children } = useChildren(ctx!.path, { watch: true, watchNew: true });
   const last = children.slice(-8).reverse();
 
   return (
@@ -183,8 +184,8 @@ const LABELS: Record<string, { label: string; desc: string }> = {
   'example.ticker':    { label: 'Ticker',     desc: 'Service + live data' },
 };
 
-view(ExampleShowcase, ({ value, ctx }) => {
-  const { data: children } = useChildren(ctx.path, { watch: true });
+const ExampleShowcaseView = declareView(ExampleShowcase, 'react', ({ value, ctx }) => {
+  const { data: children } = useChildren(ctx!.path, { watch: true });
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-6">
@@ -211,3 +212,5 @@ view(ExampleShowcase, ({ value, ctx }) => {
     </div>
   );
 });
+
+export const clientModules = [declareClientModule('starter/example/views', [ExampleCounterView, ExampleTodoListView, ExampleTodoItemView, ExamplePollView, ExampleTickerView, ExampleShowcaseView])];

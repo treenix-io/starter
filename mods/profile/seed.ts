@@ -1,6 +1,5 @@
-import { type NodeData } from '@treenx/core';
-import { registerPrefab } from '@treenx/core/mod';
+import type { NodeInput } from '@treenx/core/kernel/types';
 
-registerPrefab('profile', 'seed', [
+export const seedNodes: readonly NodeInput[] = [
   { $path: 'profile', $type: 'profile', label: 'My Profile' },
-] as NodeData[]);
+];

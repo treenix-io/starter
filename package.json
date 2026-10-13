@@ -3,15 +3,17 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "NODE_ENV=development vite",
-    "clean": "rm -rf node_modules/.vite"
+    "dev": "NODE_ENV=development node --import tsx --conditions=development node_modules/vite/bin/vite.js --configLoader native",
+    "clean": "rm -rf node_modules/.vite",
+    "build": "node --import tsx --conditions=development node_modules/vite/bin/vite.js build --configLoader native",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@anthropic-ai/claude-agent-sdk": "^0.2.79",
-    "@treenx/core": "^3.0.15",
-    "@treenx/mods": "^3.0.14",
-    "@treenx/react": "^3.0.18",
-    "@treenx/ssr": "^0.1.0"
+    "@treenx/core": "file:../core/engine/core",
+    "@treenx/mods": "file:../core/engine/mods",
+    "@treenx/react": "file:../core/engine/packages/react",
+    "@treenx/ssr": "file:../core/engine/packages/ssr"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.0",
@@ -19,7 +21,7 @@
     "babel-plugin-react-compiler": "^1.0.0",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
-    "vite": "^8.0.0"
+    "vite": "8.0.12"
   },
   "version": "0.0.1"
 }
